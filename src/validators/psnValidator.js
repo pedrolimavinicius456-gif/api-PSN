@@ -1,4 +1,6 @@
-import {body, validationResult } from 'express-validator'
+import { body } from 'express-validator'
+import { verificarErros } from '../middlewares/validatorMiddleware';
+
 
 export const regrasValidarJogo = [
 
@@ -12,11 +14,9 @@ export const regrasValidarJogo = [
         .notEmpty().withMessage('O nome do criador é obrigatorio')
         .isLength( {min: 2} ).withMessage('O nome do criador precisa de pelo menos 2 caracteres'),
 
-        (req, res, next) => {
-            const erros = validationResult(req);
-            if(!erros.isEmpty()) {
-                return res.status(400).json({ erros: erros.array()});
-            }
-            next();
-        }
+    body('ano')
+        .isnInt({ min: 0 }).withMessage('A idade deve ser um número positivo'),
+        
+    
+    verificarErros
 ];
