@@ -1,5 +1,5 @@
 import { body } from 'express-validator'
-import { verificarErros } from '../middlewares/validatorMiddleware';
+import { verificarErros } from '../middlewares/validatorMiddleware.js';
 
 
 export const regrasValidarJogo = [
@@ -15,7 +15,7 @@ export const regrasValidarJogo = [
         .isLength( {min: 2} ).withMessage('O nome do criador precisa de pelo menos 2 caracteres'),
 
     body('ano')
-        .isnInt({ min: 0 }).withMessage('A idade deve ser um número positivo'),
+        .isInt({ min: 0 }).withMessage('A idade deve ser um número positivo'),
         
     
     verificarErros

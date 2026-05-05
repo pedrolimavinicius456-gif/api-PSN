@@ -1,4 +1,5 @@
-import { validationResult } from "express-validator";
+import { validationResult } from 'express-validator';
+import app from '../app.js';
 
 export const verificarErros = (req, res) => {
     const erros = validationResult(req);
@@ -11,3 +12,11 @@ export const verificarErros = (req, res) => {
     }
     next();
 };
+
+const meuLog = (req, res, next) => {
+    const data = new Date().toISOString();
+    console.log(`[${data}] ${req.method} em ${req.url}`);
+    next(); // IMPORTANTE: Passa para o próximo middleware ou rota
+   };
+
+app.use(meuLog); // Aplica globalmente
