@@ -1,8 +1,6 @@
 import express from 'express'
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swagger.js';
 import psnRoutes from './routes/psnRoutes.js'
-//import meuLog from './middlewares/logMiddlewares.js'
+import { globalErrorHandler } from './middlewares/error.middleware.js';
 
 const app = express();
 
@@ -10,9 +8,13 @@ app.use(express.json());
 
 app.use('/api/PSN', psnRoutes);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(globalErrorHandler); // Middleware de tratamento de erros global
 
-
-//app.use(meuLog);
-
+/*const meuLog = (req, res, next) => {
+ const data = new Date().toISOString();
+ console.log(`[${data}] ${req.method} em ${req.url}`);
+ next(); // IMPORTANTE: Passa para o próximo middleware ou rota
+};
+app.use(meuLog); // Aplica globalmente
+*/
 export default app;

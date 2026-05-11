@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 import { verificarErros } from '../middlewares/validatorMiddleware.js';
-
+import { param } from 'express-validator';
 
 export const regrasValidarJogo = [
 
@@ -15,8 +15,15 @@ export const regrasValidarJogo = [
         .isLength( {min: 2} ).withMessage('O nome do criador precisa de pelo menos 2 caracteres'),
 
     body('ano')
-        .isInt({ min: 0 }).withMessage('A idade deve ser um número positivo'),
+        .isInt({ min: 0 }).withMessage('O ano deve ser um número positivo'),
         
     
+    verificarErros
+];
+
+export const buscarJogoPorIdValidation = [
+    param('id')
+        .isUUID
+        .withMessage('O ID deve ser um UUID válido'),
     verificarErros
 ];
