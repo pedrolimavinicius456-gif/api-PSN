@@ -11,13 +11,13 @@ export const buscarJogoPorId = async (req, res, next) =>{
 
     const psnDto = await PsnService.buscarJogoPorId(id);
     //const psn = db.data.PSN.find(p => p.id === Number(id));
-    res.status(200).json(psn);
+    res.status(200).json(psnDto);
     } catch (error) {
         next(error);
     }
 };
 
-export const criarJogo = async (req, res) => {
+export const criarJogo = async (req, res, next) => {
     try{
     const {nome, criador, ano, categoria} = req.body;
     const novoJogo = {id: db.data.PSN.length + 1, nome, criador, ano, categoria};
@@ -31,6 +31,7 @@ export const criarJogo = async (req, res) => {
 };
 
 export const alterarJogo =  async (req, res) => {
+    try {
     const { id } = req.params;
     const index = db.data.PSN.findIndex(p => p.id === Number(id));
 
@@ -39,9 +40,13 @@ export const alterarJogo =  async (req, res) => {
     db.data.PSN[index] = {id: Number(id), ...req.body };
     await db.write();
     res.json(db.data.PSN[index]);
+    } catch (error) {
+        next(error);
+    };     
 }
 
 export const alterarCampoJogo = async (req, res) => {
+    try {   
     const { id } = req.params;
     const psn = db.data.PSN.find(p => p.id === Number(id));
 
@@ -54,9 +59,13 @@ export const alterarCampoJogo = async (req, res) => {
     if(req.body.categoria) psn.categoria = req.body.categoria;
     await db.write();
     res.json(psn);
+    } catch (error) {
+        next(error);
+    };
 }
 
 export const deletarJogoPorId = async (req, res) => {
+    try {   
     const { id } = req.params;
     const tamanhoInicial = db.data.PSN.length;
 
@@ -68,4 +77,7 @@ export const deletarJogoPorId = async (req, res) => {
     }
 
     res.status(204).send();
+    } catch (error) {
+        next(error);
+    };  
 }

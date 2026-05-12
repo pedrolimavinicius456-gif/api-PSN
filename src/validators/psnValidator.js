@@ -23,7 +23,7 @@ export const regrasValidarJogo = [
 
 export const buscarJogoPorIdValidation = [
     param('id')
-        .isUUID
+        .isUUID()
         .withMessage('O ID deve ser um UUID válido'),
     verificarErros
 ];
