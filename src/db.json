@@ -16,10 +16,33 @@
     },
     {
       "id": 3,
-      "nome": "cyberpunk2077",
+      "nome": "Cyberpunk 2077",
       "criador": "CDProjectRed",
       "ano": "2020",
       "categoria": "Ação"
+    },
+    {
+      "id": "cc992aa7-38eb-4b55-a7a6-573016db171c",
+      "nome": "Super Mario World",
+      "criador": "Nitendo",
+      "ano": "1996",
+      "categoria": "Arcade"
+    },
+    {
+      "id": "1ba6eb0c-9873-4ad3-945e-b6318142b7ee",
+      "nome": "jogo exemplo",
+      "criador": "exemplo 32",
+      "ano": 2025,
+      "categoria": "exemplosss"
+    }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "nome": "Pedro Vinicius",
+      "email": "pedro.vinicius@example.com",
+      "idade": 25,
+      "senha": 123456
     }
   ]
 }

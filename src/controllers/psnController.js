@@ -1,5 +1,5 @@
-import db from "../data/psn.Data.js";
-import PsnService from "../services/psn.service.js";
+import db from "../config/database.js";
+import PsnService from "../services/psnService.js";
 
 export const listarJogos = async (req, res, next) => {
     try{
@@ -25,11 +25,7 @@ export const buscarJogoPorId = async (req, res, next) =>{
 export const criarJogo = async (req, res, next) => {
     try{
         const novoJogo = await PsnService.criarJogo(req.body);
-    //const {nome, criador, ano, categoria} = req.body;
-    //const novoJogo = {id: db.data.PSN.length + 1, nome, criador, ano, categoria};
 
-    //db.data.PSN.push(novoJogo);
-    //await db.write()
         res.status(201).json(novoJogo);
     } catch (error) {
         next(error);
@@ -39,13 +35,11 @@ export const criarJogo = async (req, res, next) => {
 export const alterarJogo =  async (req, res, next) => {
     try {
     const { id } = req.params;
-    const index = db.data.PSN.findIndex(p => p.id === Number(id));
 
-    if(index === -1) return res.status(404).json({ mensagem:"Jogo não encontrado" })
-    
-    db.data.PSN[index] = {id: Number(id), ...req.body };
-    await db.write();
-    res.json(db.data.PSN[index]);
+    const jogoAtualizado = await PsnService.alterarJogo(id, req.body);  
+
+    res.status(200).json(jogoAtualizado);
+
     } catch (error) {
         next(error);
     };     
@@ -70,17 +64,11 @@ export const alterarCampoJogo = async (req, res) => {
     };
 }
 
-export const deletarJogoPorId = async (req, res) => {
+export const deletarJogoPorId = async (req, res, next) => {
     try {   
-    const { id } = req.params;
-    const tamanhoInicial = db.data.PSN.length;
+        const { id } = req.params;
 
-    db.data.PSN = db.data.PSN.filter(p => p.id !== Number(id));
-    await db.write();   
-
-    if(db.data.PSN.length === tamanhoInicial) {
-        return res.status(404).json({ mensagem: "Jogo não encontrado"});
-    }
+        await PsnService.deletarJogo(id);
 
     res.status(204).send();
     } catch (error) {

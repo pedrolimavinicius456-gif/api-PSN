@@ -1,4 +1,4 @@
-import db from '../data/psn.Data.js';
+import db from '../config/database.js';
 import { v4 as uuidv4 } from 'uuid';
 
 class PsnRepository {
@@ -15,8 +15,8 @@ class PsnRepository {
     }
 
 
-    static async create(createPsnData) {
-        db.read();
+    static async create(data) {
+        await db.read();
 
         const novoJogo = {
             id: uuidv4(),
@@ -24,11 +24,11 @@ class PsnRepository {
             criador: data.criador,
             ano: data.ano,
             categoria: data.categoria,
-            //id_dono: createPsnData.id_dono
         };
 
         db.data.PSN.push(novoJogo);
-        db.write();
+
+        await db.write();
 
         return novoJogo;    
     }
@@ -45,7 +45,23 @@ class PsnRepository {
             ...db.data.PSN[index],
             ...data
         }
+        await db.write();
+        return db.data.PSN[index];
     }
+
+    static async delete(id) {
+        await db.read();
+
+        const jogo = db.data.PSN.find(p => p.id === id);
+
+        if(!jogo) {
+            return false;
+        }
+
+        db.data.PSN = db.data.PSN.filter(p => p.id !== id);
+        await db.write();
+        return true;
+    }   
 
 }
 

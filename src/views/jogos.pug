@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Lista de Jogos
+    style.
+      body {
+        font-family: Arial;
+        margin: 40px;
+      }
+
+      .card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+      }
+
+  body
+    h1 Lista de Jogos
+
+    each jogo in jogos
+      .card
+        h2= jogo.nome
+        p Criador: #{jogo.criador}
+        p Ano: #{jogo.ano}
+        p Categoria: #{jogo.categoria}
